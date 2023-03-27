@@ -1,13 +1,10 @@
-const express = require("express");
+
 const jwt = require("jsonwebtoken");
 const { registerModel } = require("../models/registerModel");
 const bcrypt = require("bcrypt");
 const fs = require("fs");
 require("dotenv").config();
-if (typeof localStorage === "undefined" || localStorage === null) {
-  var LocalStorage = require("node-localstorage").LocalStorage;
-  localStorage = new LocalStorage("./scratch");
-}
+
 
 const loginControllerRoute = async (req, res) => {
   const { email, password } = req.body;
