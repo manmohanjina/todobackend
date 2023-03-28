@@ -1,4 +1,4 @@
-const express = require("express");
+
 const jwt = require("jsonwebtoken");
 const { registerModel } = require("../models/registerModel");
 const bcrypt = require("bcrypt");

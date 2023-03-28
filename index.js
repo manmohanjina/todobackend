@@ -12,7 +12,7 @@ app.use(cors())
 app.use(express.json());
 require("dotenv").config();
 
-app.use('/',testRoute)
+
 app.use("/", registerRouter);
 app.use("/", loginRoute);
 app.use('/',todoRoute)
@@ -25,6 +25,10 @@ app.get("/",async(req,res)=>{
     console.log(error)
     res.status(500).send({"error":"error while loading",error})
   }
+})
+
+app.get('/',async(req,res)=>{
+  res.send({"msg":"welcome"})
 })
 
 app.listen(process.env.port, () => {
