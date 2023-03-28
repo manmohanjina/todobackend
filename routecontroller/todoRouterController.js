@@ -1,8 +1,6 @@
-const express = require("express");
+
 const { TodoModel } = require("../models/todoModel");
-const fs=require('fs')
-
-
+const fs = require("fs");
 
 const todoRouterController = async (req, res) => {
   try {
@@ -35,23 +33,16 @@ const getallTodoRouter = async (req, res) => {
 const singleUserRouter = async (req, res) => {
   try {
     const userTodo = await TodoModel.find();
-    const id=fs.readFileSync('./key.txt',"utf-8")
+    const id = fs.readFileSync("./key.txt", "utf-8");
 
-   
-   
-
-    let singleuserTodo =  userTodo.filter((elm) =>{
-        return elm.userID===id
-   
+    let singleuserTodo = userTodo.filter((elm) => {
+      return elm.userID === id;
     });
-    if(singleuserTodo.length===0){
-        return res.status(200).send({"error":"no todo found "})
+    if (singleuserTodo.length === 0) {
+      return res.status(200).send({ error: "no todo found " });
+    } else {
+      res.status(200).send({ success: singleuserTodo });
     }
-    else{
-        res.status(200).send({"success":singleuserTodo})
-    }
-    
-    res.send('ok')
   } catch (error) {
     console.log(error);
     res.status(500).send({ error: "cannot complete req now", error });
@@ -63,13 +54,13 @@ const deleteRouterController = async (req, res) => {
     const { id } = req.params;
     console.log(id);
 
-    const finditem = await TodoModel.findOne({ id });
+    const finditem = await TodoModel.findOne({ _id:id });
     if (!finditem) {
       return res.status(301).send({
         error: "item does not exists",
       });
     } else {
-      await TodoModel.findByIdAndDelete({ id });
+      await TodoModel.findByIdAndDelete({ _id:id });
       res.status(200).send({ success: "item deleted success", finditem });
     }
   } catch (error) {
@@ -78,9 +69,36 @@ const deleteRouterController = async (req, res) => {
   }
 };
 
+const updateRouterController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { titel, additionalnote,status } = req.body;
+   
+    //  if(!id||!titel){
+    //   return res.status(301).send({"error":"all fields nessesary to make changes"})
+    //  }
+    const updatedTodo = await TodoModel.findOne({ _id: id });
+    const userID_in_todo = updatedTodo.userID;
+    const user_making_req = req.body.userID;
+
+    if(userID_in_todo!==user_making_req){
+return res.status(301).send({"error":"youcannot change other todo"})
+    }
+   else{
+      await TodoModel.findByIdAndUpdate({_id:id},{titel,additionalnote,status})
+      res.status(200).send({"success":"todo updated successfully"})
+    }
+    
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ error: "cannot update ", error });
+  }
+};
+
 module.exports = {
   todoRouterController,
   deleteRouterController,
   getallTodoRouter,
   singleUserRouter,
+  updateRouterController,
 };

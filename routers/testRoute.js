@@ -5,7 +5,7 @@ const { tokenValidator, isAdmin } = require('../midlleware/validator')
 
 const testRoute=express.Router()
 
-testRoute.get('/test',tokenValidator ,isAdmin,async(req,res)=>{
+testRoute.get('/test',async(req,res)=>{
 res.send("testing passed")
 })
 
