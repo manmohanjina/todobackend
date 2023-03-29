@@ -15,6 +15,7 @@ const loginControllerRoute = async (req, res) => {
   try {
     //checking if user email address is stored in DB or not
     const isUserPresent = await registerModel.findOne({ email });
+    let role=isUserPresent.role
     if (!isUserPresent) {
       res.status(401).send({ error: "no user found with email" });
     } else {
@@ -37,7 +38,7 @@ const loginControllerRoute = async (req, res) => {
             process.env.key,
             { expiresIn: "7d" }
           );
-          res.status(200).send({ success_token: access_token,isUserPresent });
+          res.status(200).send({ success_token: access_token,role});
         } else {
           res.status(301).send({ error: "wrong password try again" });
         }
