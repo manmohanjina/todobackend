@@ -38,7 +38,7 @@ const loginControllerRoute = async (req, res) => {
             process.env.key,
             { expiresIn: "7d" }
           );
-          res.status(200).send({ success_token: access_token,role});
+          res.status(200).send({ success_token: access_token,role ,isUserPresent});
         } else {
           res.status(301).send({ error: "wrong password try again" });
         }
