@@ -12,7 +12,7 @@ const todoRouterController = async (req, res) => {
       let new_todo = await new TodoModel({ titel, additionalnote, userID });
       await new_todo.save();
 
-      res.status(200).send({ success: "todo added success" });
+      res.status(200).send({ success: "todo added success",new_todo });
     }
   } catch (error) {
     console.log(error);
