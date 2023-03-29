@@ -13,8 +13,8 @@ app.use(express.json());
 require("dotenv").config();
 
 
-app.use("/", registerRouter);
-app.use("/", loginRoute);
+app.use("/user", registerRouter);
+app.use("/user", loginRoute);
 app.use('/',todoRoute)
 app.use('/',forgotRouter)
 app.use('/admin',adminRouter)
