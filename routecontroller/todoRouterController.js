@@ -96,10 +96,27 @@ return res.status(301).send({"error":"youcannot change other todo"})
   }
 };
 
+
+const toggleRouterUpdater=async(req,res)=>{
+  try {
+    const {id}=req.params;
+     const todo=await TodoModel.findById({_id:id})
+     todo.status=!todo.status;
+     await todo.save()
+ 
+     res.send(todo)
+    
+  } catch (error) {
+    console.log(error)
+    res.status(500).send({"error":"error while toggling"})
+  }
+}
+
 module.exports = {
   todoRouterController,
   deleteRouterController,
   getallTodoRouter,
   singleUserRouter,
   updateRouterController,
+  toggleRouterUpdater
 };
