@@ -25,14 +25,14 @@ const loginControllerRoute = async (req, res) => {
         } else if (result) {
           //genrating a access token is all the things are matched ;
           
-          fs.writeFile("./key.txt",isUserPresent._id.valueOf(),(err,text)=>{
-            if(err){
-              console.log(err)
-            }
-            else{
-              console.log(text,'text created')
-            }
-          })
+          // fs.writeFile("./key.txt",isUserPresent._id.valueOf(),(err,text)=>{
+          //   if(err){
+          //     console.log(err)
+          //   }
+          //   else{
+          //     console.log(text,'text created')
+          //   }
+          // })
           const access_token = jwt.sign(
             { _id: isUserPresent._id },
             process.env.key,
