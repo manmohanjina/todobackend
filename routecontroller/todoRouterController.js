@@ -33,13 +33,13 @@ const getallTodoRouter = async (req, res) => {
 const singleUserRouter = async (req, res) => {
   try {
     const userTodo = await TodoModel.find();
-    const id = fs.readFileSync("./key.txt", "utf-8");
+    
 
     let singleuserTodo = userTodo.filter((elm) => {
-      return elm.userID === id;
+      return elm.userID === req.user;
     });
     if (singleuserTodo.length === 0) {
-      return res.status(200).send({ error: "no todo found " });
+      return res.status(200).send({ "msg": "no todo found " });
     } else {
       res.status(200).send({ success: singleuserTodo });
     }
