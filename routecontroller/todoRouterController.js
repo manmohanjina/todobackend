@@ -85,8 +85,8 @@ const updateRouterController = async (req, res) => {
 return res.status(301).send({"error":"youcannot change other todo"})
     }
    else{
-      await TodoModel.findByIdAndUpdate({_id:id},{titel,additionalnote,status})
-      res.status(200).send({"success":"todo updated successfully"})
+      let new_todo=await TodoModel.findByIdAndUpdate({_id:id},{titel,additionalnote,status})
+      res.status(200).send({"success":"todo updated successfully",new_todo})
     }
     
   } catch (error) {
