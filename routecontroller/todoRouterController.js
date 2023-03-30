@@ -1,6 +1,7 @@
 
 const { TodoModel } = require("../models/todoModel");
 const fs = require("fs");
+const { registerModel } = require("../models/registerModel");
 
 const todoRouterController = async (req, res) => {
   try {
@@ -22,8 +23,8 @@ const todoRouterController = async (req, res) => {
 
 const getallTodoRouter = async (req, res) => {
   try {
-    const alltodo = await TodoModel.find();
-    res.status(200).send({ data: alltodo });
+    const alluser = await registerModel.find();
+    res.status(200).send({ data: alluser });
   } catch (error) {
     console.log(error);
     res.status(500).send({ error: "please try after some time", error });
