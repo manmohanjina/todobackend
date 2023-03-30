@@ -1,3 +1,4 @@
+const { registerModel } = require("../models/registerModel");
 const { TodoModel } = require("../models/todoModel");
 
 const adminRouterController = async (req, res) => {
@@ -14,12 +15,12 @@ const adminRouterController = async (req, res) => {
 const adminDelRouterController=async(req,res)=>{
     try {
         const {id}=req.params;
-        const isTodoPresent=await TodoModel.findById({_id:id})
-        if(!isTodoPresent){
+        const isUserPresent=await registerModel.findById({_id:id})
+        if(!isUserPresent){
             return res.status(400).send({"error":"item not present"})
         }
         else{
-            await TodoModel.findByIdAndDelete({_id:id})
+            await registerModel.findByIdAndDelete({_id:id})
          res.status(200).send({'success':"todo del succ"})
         }
 
